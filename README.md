@@ -1,4 +1,4 @@
-Here’s a list of common voice commands you can implement fby  **Jarvis** system, organized by category. These commands can be expanded and customized based on your needs.
+Here’s a list of common voice commands you can implement by  **Jarvis** system, organized by category. These commands can be expanded and customized based on your needs.
 
 ---
 
