@@ -1124,37 +1124,591 @@ with open("myfile.txt") as f:
   lines = [line.strip() for line in f]
 ```
 
-Dictionaries
-----------
-**Also known as mappings or hash tables. They are key value pairs that are guaranteed to retain order of insertion starting from Python 3.7**
+---
+
+### 1. **Advanced List Creation**
+#### **List Comprehensions with Conditions**
 ```python
+# Create a list of squares for even numbers only
+squares = [x**2 for x in range(10) if x % 2 == 0]  # [0, 4, 16, 36, 64]
+```
+
+#### **Nested List Comprehensions**
+```python
+# Flatten a 2D list
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flattened = [num for row in matrix for num in row]  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+#### **Using `map` and `filter`**
+```python
+# Map: Apply a function to all items
+numbers = [1, 2, 3, 4]
+squared = list(map(lambda x: x**2, numbers))  # [1, 4, 9, 16]
+
+# Filter: Keep items that satisfy a condition
+evens = list(filter(lambda x: x % 2 == 0, numbers))  # [2, 4]
+```
+
+#### **Using `zip` for Parallel Iteration**
+```python
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+combined = list(zip(names, ages))  # [('Alice', 25), ('Bob', 30), ('Charlie', 35)]
+```
+
+---
+
+### 2. **Advanced List Manipulation**
+#### **List Slicing with Steps**
+```python
+# Reverse a list
+my_list = [1, 2, 3, 4, 5]
+reversed_list = my_list[::-1]  # [5, 4, 3, 2, 1]
+
+# Get every second element
+every_second = my_list[::2]  # [1, 3, 5]
+```
+
+#### **List Unpacking**
+```python
+# Unpack into variables
+first, *middle, last = [1, 2, 3, 4, 5]
+print(first)   # 1
+print(middle)  # [2, 3, 4]
+print(last)    # 5
+```
+
+#### **List Concatenation with `itertools.chain`**
+```python
+from itertools import chain
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+combined = list(chain(list1, list2))  # [1, 2, 3, 4, 5, 6]
+```
+
+#### **List Rotation**
+```python
+# Rotate a list to the right by `k` steps
+def rotate_list(lst, k):
+    k = k % len(lst)
+    return lst[-k:] + lst[:-k]
+
+rotate_list([1, 2, 3, 4, 5], 2)  # [4, 5, 1, 2, 3]
+```
+
+---
+
+### 3. **Advanced List Operations**
+#### **Finding Unique Elements**
+```python
+# Using `set` (order not preserved)
+my_list = [1, 2, 2, 3, 4, 4, 5]
+unique = list(set(my_list))  # [1, 2, 3, 4, 5]
+
+# Using `dict.fromkeys` (order preserved)
+unique = list(dict.fromkeys(my_list))  # [1, 2, 3, 4, 5]
+```
+
+#### **Finding the Most Frequent Element**
+```python
+from collections import Counter
+my_list = [1, 2, 2, 3, 3, 3, 4]
+most_common = Counter(my_list).most_common(1)  # [(3, 3)]
+```
+
+#### **Grouping Elements**
+```python
+# Group by even and odd
+from itertools import groupby
+my_list = [1, 2, 3, 4, 5, 6]
+grouped = {k: list(v) for k, v in groupby(sorted(my_list), key=lambda x: x % 2)}
+# {0: [2, 4, 6], 1: [1, 3, 5]}
+```
+
+#### **Transposing a Matrix**
+```python
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+transposed = list(zip(*matrix))  # [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+```
+
+---
+
+### 4. **Performance Optimization**
+#### **Using `deque` for Efficient Pop/Append**
+```python
+from collections import deque
+my_list = deque([1, 2, 3, 4])
+my_list.appendleft(0)  # [0, 1, 2, 3, 4]
+my_list.popleft()      # [1, 2, 3, 4]
+```
+
+#### **Avoiding Unnecessary Copies**
+```python
+# Use slicing or `copy` for shallow copies
+original = [1, 2, 3]
+copy1 = original[:]
+copy2 = original.copy()
+```
+
+#### **Using Generators for Large Lists**
+```python
+# Generator expression
+squares = (x**2 for x in range(10))  # Lazy evaluation
+for num in squares:
+    print(num)
+```
+
+---
+
+### 5. **Functional Programming with Lists**
+#### **Using `functools.reduce`**
+```python
+from functools import reduce
+numbers = [1, 2, 3, 4]
+product = reduce(lambda x, y: x * y, numbers)  # 24
+```
+
+#### **Using `itertools` for Advanced Iteration**
+```python
+from itertools import permutations, combinations, product
+
+# Permutations
+perms = list(permutations([1, 2, 3]))  # [(1, 2, 3), (1, 3, 2), (2, 1, 3), ...]
+
+# Combinations
+combs = list(combinations([1, 2, 3], 2))  # [(1, 2), (1, 3), (2, 3)]
+
+# Cartesian product
+cartesian = list(product([1, 2], ['a', 'b']))  # [(1, 'a'), (1, 'b'), (2, 'a'), (2, 'b')]
+```
+
+---
+
+### 6. **List-Based Algorithms**
+#### **Finding the Longest Increasing Subsequence (LIS)**
+```python
+def longest_increasing_subsequence(nums):
+    dp = [1] * len(nums)
+    for i in range(1, len(nums)):
+        for j in range(i):
+            if nums[i] > nums[j]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    return max(dp)
+
+nums = [10, 9, 2, 5, 3, 7, 101, 18]
+print(longest_increasing_subsequence(nums))  # 4
+```
+
+#### **Finding All Subarrays**
+```python
+def all_subarrays(arr):
+    return [arr[i:j] for i in range(len(arr)) for j in range(i + 1, len(arr) + 1)]
+
+arr = [1, 2, 3]
+print(all_subarrays(arr))  # [[1], [1, 2], [1, 2, 3], [2], [2, 3], [3]]
+```
+
+---
+
+### 7. **List Utilities**
+#### **Chunking a List**
+```python
+def chunk_list(lst, size):
+    return [lst[i:i + size] for i in range(0, len(lst), size)]
+
+lst = [1, 2, 3, 4, 5, 6, 7]
+print(chunk_list(lst, 3))  # [[1, 2, 3], [4, 5, 6], [7]]
+```
+
+#### **Finding the Index of the Maximum/Minimum Element**
+```python
+my_list = [10, 20, 30, 40]
+max_index = my_list.index(max(my_list))  # 3
+min_index = my_list.index(min(my_list))  # 0
+```
+
+---
+
+
+Dictionaries (also known as mappings or hash tables) are built-in data structures that store data in key-value pairs. Starting from Python 3.7, they remember the order of insertion.
+
+## Basic Operations
+
+```python
+# Create a dictionary
 my_dict = {'name': 'Andrei Neagoie', 'age': 30, 'magic_power': False}
-my_dict['name']                      # Andrei Neagoie
-len(my_dict)                         # 3
-list(my_dict.keys())                 # ['name', 'age', 'magic_power']
-list(my_dict.values())               # ['Andrei Neagoie', 30, False]
-list(my_dict.items())                # [('name', 'Andrei Neagoie'), ('age', 30), ('magic_power', False)]
-my_dict['favourite_snack'] = 'Grapes'# {'name': 'Andrei Neagoie', 'age': 30, 'magic_power': False, 'favourite_snack': 'Grapes'}
-my_dict.get('age')                   # 30 --> Returns None if key does not exist.
-my_dict.get('ages', 0 )              # 0 --> Returns default (2nd param) if key is not found
 
-#Remove key
+# Accessing values
+print(my_dict['name'])        # 'Andrei Neagoie'
+print(my_dict.get('age'))     # 30
+print(my_dict.get('ages', 0)) # 0 (default if key doesn't exist)
+
+# Dictionary Size
+print(len(my_dict))           # 3
+
+# Keys, Values, and Items
+print(list(my_dict.keys()))    # ['name', 'age', 'magic_power']
+print(list(my_dict.values()))   # ['Andrei Neagoie', 30, False]
+print(list(my_dict.items()))     # [('name', 'Andrei Neagoie'), ('age', 30), ('magic_power', False)]
+```
+
+## Modifying Dictionaries
+
+```python
+# Add new key-value pair
+my_dict['favourite_snack'] = 'Grapes'
+
+# Update existing key-value pair
+my_dict['age'] = 31
+
+# Remove key-value pairs
 del my_dict['name']
-my_dict.pop('name', None)
+my_dict.pop('magic_power', None)  # Remove and return value, if key doesn't exist, return None
+
+# Clear all items
+my_dict.clear()  # my_dict will be {}
 ```
 
-```python
-my_dict.update({'cool': True})                                         # {'name': 'Andrei Neagoie', 'age': 30, 'magic_power': False, 'favourite_snack': 'Grapes', 'cool': True}
-{**my_dict, **{'cool': True} }                                         # {'name': 'Andrei Neagoie', 'age': 30, 'magic_power': False, 'favourite_snack': 'Grapes', 'cool': True}
-new_dict = dict([['name','Andrei'],['age',32],['magic_power',False]])  # Creates a dict from collection of key-value pairs.
-new_dict = dict(zip(['name','age','magic_power'],['Andrei',32, False]))# Creates a dict from two collections.
-new_dict = my_dict.pop('favourite_snack')                              # Removes item from dictionary.
-```
+## Merging and Updating Dictionaries
 
 ```python
-# Dictionary Comprehension
-{key: value for key, value in new_dict.items() if key == 'age' or key == 'name'} # {'name': 'Andrei', 'age': 32} --> Filter dict by keys
+# Update with another dictionary
+my_dict.update({'hobby': 'Coding'})  # Add or update multiple items
+
+# Merging dictionaries (Python 3.9+)
+new_dict = my_dict | {'language': 'Python'}  # Creates a new merged dictionary
+
+# Merging dictionaries using unpacking
+new_dict = {**my_dict, **{'cool': True}}  # Merges and creates a new dictionary
 ```
+
+## Advanced Dictionary Creation
+
+```python
+# Dictionary from a collection of key-value pairs
+new_dict = dict([['name', 'Andrei'], ['age', 32], ['magic_power', False]])
+
+# Creating a dictionary from two lists (keys and values)
+new_dict = dict(zip(['name', 'age', 'magic_power'], ['Andrei', 32, False]))
+
+# Using dictionary comprehension
+squared_dict = {x: x**2 for x in range(5)}  # Create a dict of squares: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+# Filtering with dictionary comprehension
+filtered_dict = {key: value for key, value in new_dict.items() if key in ['age', 'name']}  # {'name': 'Andrei', 'age': 32}
+```
+
+## Iterating Over Dictionaries
+
+```python
+# Iterate through keys
+for key in my_dict:
+    print(key)  # Prints each key
+
+# Iterate through values
+for value in my_dict.values():
+    print(value)  # Prints each value
+
+# Iterate through key-value pairs
+for key, value in my_dict.items():
+    print(f"{key}: {value}")  # Prints key-value pairs
+```
+
+## Dictionary Views
+
+- **Keys View:** A view object that displays a list of all the keys in the dictionary.
+- **Values View:** A view object that displays a list of all the values in the dictionary.
+- **Items View:** A view object that displays a list of all the key-value pairs in the dictionary.
+
+```python
+keys_view = my_dict.keys()
+values_view = my_dict.values()
+items_view = my_dict.items()
+
+# These views are dynamic; changes to the dictionary will reflect in them
+print(keys_view)    # dict_keys([...])
+print(values_view)  # dict_values([...])
+print(items_view)   # dict_items([...])
+```
+
+## Nested Dictionaries
+
+```python
+# Creating a nested dictionary
+nested_dict = {
+    'person1': {'name': 'Andrei', 'age': 30},
+    'person2': {'name': 'Jane', 'age': 25},
+}
+
+# Accessing nested dictionary values
+print(nested_dict['person1']['name'])  # 'Andrei'
+
+# Modifying nested dictionary values
+nested_dict['person2']['age'] = 26
+```
+
+## Common Dictionary Methods
+
+| Method               | Description                                |
+|----------------------|--------------------------------------------|
+| `dict.clear()`       | Remove all items from the dictionary.     |
+| `dict.copy()`        | Return a shallow copy of the dictionary.  |
+| `dict.fromkeys()`    | Create a new dictionary from keys with specified value. |
+| `dict.setdefault()`   | Return the value of the specified key. If it does not exist, insert the key with a specified value. |
+| `dict.update()`      | Update the dictionary with elements from another dictionary or from an iterable of key-value pairs. |
+| `dict.popitem()`     | Remove and return the last inserted key-value pair. |
+
+## Best Practices
+
+- **Use Descriptive Keys:** Use meaningful key names to make the dictionary self-documenting.
+- **Immutable Keys:** Keys must be of immutable types (such as strings, numbers, or tuples).
+- **Keep It Flat:** Nested dictionaries can become hard to manage; try to maintain a flatter structure when possible.
+- **JSON Compatibility:** Recognize that dictionaries can be converted to and from JSON format using the `json` module (for APIs, configuration files, etc.).
+
+### Example of JSON Conversion
+
+```python
+import json
+
+# Dictionary to JSON
+json_data = json.dumps(my_dict)
+
+# JSON back to Dictionary
+python_dict = json.loads(json_data)
+```
+
+-------
+
+### 1. **Advanced Dictionary Creation**
+#### **Dictionary Comprehensions**
+```python
+# Create a dictionary of squares
+squares = {x: x**2 for x in range(5)}  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+# Filter dictionary by value
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+filtered = {k: v for k, v in my_dict.items() if v > 1}  # {'b': 2, 'c': 3}
+```
+
+#### **Using `zip` to Create Dictionaries**
+```python
+keys = ['a', 'b', 'c']
+values = [1, 2, 3]
+my_dict = dict(zip(keys, values))  # {'a': 1, 'b': 2, 'c': 3}
+```
+
+#### **Default Values with `defaultdict`**
+```python
+from collections import defaultdict
+
+# Default value for missing keys
+my_dict = defaultdict(int)
+my_dict['a'] += 1  # {'a': 1}
+```
+
+#### **Nested Dictionaries**
+```python
+# Using dictionary comprehensions
+nested = {x: {y: x * y for y in range(1, 4)} for x in range(1, 4)}
+# {1: {1: 1, 2: 2, 3: 3}, 2: {1: 2, 2: 4, 3: 6}, 3: {1: 3, 2: 6, 3: 9}}
+```
+
+---
+
+### 2. **Advanced Dictionary Manipulation**
+#### **Merging Dictionaries**
+```python
+# Using unpacking (Python 3.5+)
+dict1 = {'a': 1, 'b': 2}
+dict2 = {'b': 3, 'c': 4}
+merged = {**dict1, **dict2}  # {'a': 1, 'b': 3, 'c': 4}
+
+# Using `update`
+dict1.update(dict2)  # dict1 is now {'a': 1, 'b': 3, 'c': 4}
+```
+
+#### **Deep Copying Dictionaries**
+```python
+import copy
+my_dict = {'a': [1, 2, 3]}
+deep_copy = copy.deepcopy(my_dict)  # Creates a deep copy
+```
+
+#### **Removing Keys Conditionally**
+```python
+# Remove keys with None values
+my_dict = {'a': 1, 'b': None, 'c': 3}
+cleaned = {k: v for k, v in my_dict.items() if v is not None}  # {'a': 1, 'c': 3}
+```
+
+#### **Inverting a Dictionary**
+```python
+# Swap keys and values
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+inverted = {v: k for k, v in my_dict.items()}  # {1: 'a', 2: 'b', 3: 'c'}
+```
+
+---
+
+### 3. **Advanced Dictionary Operations**
+#### **Finding the Maximum/Minimum Key or Value**
+```python
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+
+# Max key
+max_key = max(my_dict, key=my_dict.get)  # 'c'
+
+# Min value
+min_value = min(my_dict.values())  # 1
+```
+
+#### **Sorting a Dictionary**
+```python
+# Sort by key
+sorted_by_key = dict(sorted(my_dict.items()))  # {'a': 1, 'b': 2, 'c': 3}
+
+# Sort by value
+sorted_by_value = dict(sorted(my_dict.items(), key=lambda item: item[1]))  # {'a': 1, 'b': 2, 'c': 3}
+```
+
+#### **Grouping Data with Dictionaries**
+```python
+from collections import defaultdict
+
+# Group by even and odd
+data = [1, 2, 3, 4, 5, 6]
+grouped = defaultdict(list)
+for num in data:
+    key = 'even' if num % 2 == 0 else 'odd'
+    grouped[key].append(num)
+# {'odd': [1, 3, 5], 'even': [2, 4, 6]}
+```
+
+#### **Counting with `Counter`**
+```python
+from collections import Counter
+
+# Count occurrences
+my_list = ['a', 'b', 'a', 'c', 'b', 'a']
+count = Counter(my_list)  # {'a': 3, 'b': 2, 'c': 1}
+```
+
+---
+
+### 4. **Performance Optimization**
+#### **Using `dict.get` for Safe Access**
+```python
+# Avoid KeyError
+value = my_dict.get('d', 'default')  # 'default'
+```
+
+#### **Using `dict.setdefault` for Initialization**
+```python
+# Initialize missing keys
+my_dict = {}
+my_dict.setdefault('a', []).append(1)  # {'a': [1]}
+```
+
+#### **Using `frozenset` for Immutable Keys**
+```python
+# Use frozenset as dictionary keys
+my_dict = {frozenset({'a', 'b'}): 1}
+```
+
+---
+
+### 5. **Functional Programming with Dictionaries**
+#### **Mapping and Filtering**
+```python
+# Map values
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+mapped = {k: v * 2 for k, v in my_dict.items()}  # {'a': 2, 'b': 4, 'c': 6}
+
+# Filter keys
+filtered = {k: v for k, v in my_dict.items() if k in {'a', 'b'}}  # {'a': 1, 'b': 2}
+```
+
+#### **Using `functools.reduce`**
+```python
+from functools import reduce
+
+# Sum all values
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+total = reduce(lambda acc, item: acc + item[1], my_dict.items(), 0)  # 6
+```
+
+---
+
+### 6. **Real-World Use Cases**
+#### **Counting Word Frequencies**
+```python
+text = "hello world hello"
+words = text.split()
+freq = Counter(words)  # {'hello': 2, 'world': 1}
+```
+
+#### **Building a Graph**
+```python
+graph = defaultdict(list)
+edges = [('A', 'B'), ('A', 'C'), ('B', 'D')]
+for u, v in edges:
+    graph[u].append(v)
+# {'A': ['B', 'C'], 'B': ['D']}
+```
+
+#### **Configurations and Settings**
+```python
+config = {
+    'database': {
+        'host': 'localhost',
+        'port': 5432,
+        'user': 'admin',
+        'password': 'secret'
+    },
+    'logging': {
+        'level': 'DEBUG',
+        'file': 'app.log'
+    }
+}
+```
+
+---
+
+### 7. **Dictionary-Based Algorithms**
+#### **Finding the Longest Substring Without Repeating Characters**
+```python
+def longest_substring(s):
+    char_map = {}
+    left = 0
+    max_len = 0
+    for right, char in enumerate(s):
+        if char in char_map and char_map[char] >= left:
+            left = char_map[char] + 1
+        char_map[char] = right
+        max_len = max(max_len, right - left + 1)
+    return max_len
+
+print(longest_substring("abcabcbb"))  # 3
+```
+
+#### **Two-Sum Problem**
+```python
+def two_sum(nums, target):
+    seen = {}
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+    return []
+
+print(two_sum([2, 7, 11, 15], 9))  # [0, 1]
+```
+
+---
+
+
 
 Tuples
 ----
