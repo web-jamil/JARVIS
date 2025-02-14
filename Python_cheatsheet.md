@@ -1101,4 +1101,5 @@ import re
 
 Credits
 ------
-Automated Boring With Python
+Automate the Boring Stuff
+with Python by Al Sweigart
