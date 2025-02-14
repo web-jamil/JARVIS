@@ -1101,4 +1101,4 @@ import re
 
 Credits
 ------
-Inspired by: https://github.com/gto76/python-cheatsheet
+Automated Boring With Python
