@@ -24,8 +24,10 @@ type(2.2) # float
 type(4E2) # float - 4*10 to the power of 2
 ```
 
-```python
+
 # Arithmetic
+
+```python
 10 + 3  # 13
 10 - 3  # 7
 10 * 3  # 30
@@ -34,9 +36,10 @@ type(4E2) # float - 4*10 to the power of 2
 10 // 3 # 3 --> floor division - no decimals and returns an int
 10 % 3  # 1 --> modulo operator - return the remainder. Good for deciding if number is even or odd
 ```
+# Basic Functions
 
 ```python
-# Basic Functions
+
 pow(5, 2)      # 25 --> like doing 5**2
 abs(-50)       # 50
 round(5.46)    # 5
@@ -44,14 +47,427 @@ round(5.468, 2)# 5.47 --> round to nth digit
 bin(512)       # '0b1000000000' -->  binary format
 hex(512)       # '0x200' --> hexadecimal format
 ```
+# Converting Strings to Numbers
 
 ```python
-# Converting Strings to Numbers
+
 age = input("How old are you?")
 age = int(age)
 pi = input("What is the value of pi?")
 pi = float(pi)
+``` 
+
+### Advanced Arithmetic Operations
+# Complex Numbers
+```python
+
+x = 1 + 2j  # Complex number
+type(x)     # <class 'complex'>
+x.real      # 1.0
+x.imag      # 2.0
 ```
+
+# Bitwise Operations
+
+```python
+a = 10  # 1010 in binary
+b = 4   # 0100 in binary
+a & b   # 0  --> Bitwise AND
+a | b   # 14 --> Bitwise OR
+a ^ b   # 14 --> Bitwise XOR
+~a      # -11 --> Bitwise NOT
+a << 2  # 40 --> Left shift
+a >> 2  # 2  --> Right shift
+```
+
+### Advanced Arithmetic Operations
+```python
+# Complex Numbers
+x = 1 + 2j  # Complex number
+type(x)     # <class 'complex'>
+x.real      # 1.0
+x.imag      # 2.0
+
+# Bitwise Operations
+a = 10  # 1010 in binary
+b = 4   # 0100 in binary
+a & b   # 0  --> Bitwise AND
+a | b   # 14 --> Bitwise OR
+a ^ b   # 14 --> Bitwise XOR
+~a      # -11 --> Bitwise NOT
+a << 2  # 40 --> Left shift
+a >> 2  # 2  --> Right shift
+```
+
+
+
+### Mathematical Functions
+```python
+import math
+
+# Constants
+math.pi       # 3.141592653589793
+math.e        # 2.718281828459045
+
+# Logarithmic Functions
+math.log(10)        # 2.302585092994046 --> Natural logarithm
+math.log10(100)     # 2.0 --> Base-10 logarithm
+math.log2(8)        # 3.0 --> Base-2 logarithm
+
+# Trigonometric Functions
+math.sin(math.pi/2) # 1.0
+math.cos(math.pi)   # -1.0
+math.tan(0)         # 0.0
+
+# Angular Conversion
+math.degrees(math.pi) # 180.0 --> Radians to degrees
+math.radians(180)     # 3.141592653589793 --> Degrees to radians
+
+# Other Functions
+math.sqrt(16)        # 4.0 --> Square root
+math.factorial(5)    # 120 --> Factorial
+math.gcd(12, 16)     # 4 --> Greatest common divisor
+math.ceil(4.3)       # 5 --> Ceiling function
+math.floor(4.7)      # 4 --> Floor function
+```
+
+### Random Numbers
+```python
+import random
+
+# Random float between 0 and 1
+random.random()
+
+# Random float between a and b
+random.uniform(1.5, 2.5)
+
+# Random integer between a and b (inclusive)
+random.randint(1, 10)
+
+# Random choice from a sequence
+random.choice([1, 2, 3, 4, 5])
+
+# Shuffle a list in place
+numbers = [1, 2, 3, 4, 5]
+random.shuffle(numbers)
+```
+
+### Number Formatting
+```python
+# Formatting Floats
+x = 1234.56789
+format(x, '0.2f')  # '1234.57' --> 2 decimal places
+format(x, '0.1f')  # '1234.6'  --> 1 decimal place
+
+# Formatting Integers
+y = 1234
+format(y, '05d')   # '01234' --> Zero-padded to 5 digits
+
+# Scientific Notation
+z = 123456789
+format(z, '0.2e')  # '1.23e+08' --> Scientific notation with 2 decimal places
+```
+
+### Working with Fractions
+```python
+from fractions import Fraction
+
+# Creating fractions
+f1 = Fraction(3, 4)  # 3/4
+f2 = Fraction(1, 2)  # 1/2
+
+# Arithmetic with fractions
+f1 + f2  # Fraction(5, 4)
+f1 * f2  # Fraction(3, 8)
+f1 / f2  # Fraction(3, 2)
+
+# Converting to float
+float(f1)  # 0.75
+```
+
+### Working with Decimals
+```python
+from decimal import Decimal, getcontext
+
+# Setting precision
+getcontext().prec = 6
+
+# Creating decimals
+d1 = Decimal('0.1')
+d2 = Decimal('0.2')
+
+# Arithmetic with decimals
+d1 + d2  # Decimal('0.3')
+d1 * d2  # Decimal('0.02')
+d1 / d2  # Decimal('0.5')
+```
+
+### Number Theory
+```python
+import math
+
+# Check if a number is prime
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+is_prime(29)  # True
+is_prime(30)  # False
+
+# Generating prime numbers
+def generate_primes(limit):
+    primes = []
+    for num in range(2, limit):
+        if is_prime(num):
+            primes.append(num)
+    return primes
+
+generate_primes(20)  # [2, 3, 5, 7, 11, 13, 17, 19]
+```
+
+### Working with Large Numbers
+```python
+# Python handles large integers gracefully
+large_num = 2**1000  # A very large number
+len(str(large_num))  # 302 --> Number of digits
+
+# Factorial of a large number
+import math
+math.factorial(100)  # 93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000
+```
+
+---
+
+### 1. **Advanced Mathematical Libraries**
+Python has powerful libraries for advanced numerical and mathematical computations.
+
+#### **NumPy** (Numerical Python)
+```python
+import numpy as np
+
+# Arrays and vectorized operations
+arr = np.array([1, 2, 3, 4])
+arr * 2  # array([2, 4, 6, 8])
+
+# Matrix operations
+matrix = np.array([[1, 2], [3, 4]])
+np.linalg.det(matrix)  # Determinant: -2.0
+np.linalg.inv(matrix)  # Inverse: array([[-2. ,  1. ], [ 1.5, -0.5]])
+
+# Eigenvalues and eigenvectors
+eigenvalues, eigenvectors = np.linalg.eig(matrix)
+
+# Random numbers
+np.random.rand(5)  # Array of 5 random floats between 0 and 1
+np.random.normal(0, 1, 10)  # 10 samples from a normal distribution
+
+# Advanced functions
+np.fft.fft([1, 2, 3, 4])  # Fast Fourier Transform
+np.polyfit([1, 2, 3], [1, 4, 9], 2)  # Polynomial fitting
+```
+
+#### **SciPy** (Scientific Python)
+```python
+from scipy import integrate, optimize, interpolate
+
+# Numerical integration
+result, error = integrate.quad(lambda x: np.sin(x), 0, np.pi)  # Result: 2.0
+
+# Optimization
+minimum = optimize.minimize(lambda x: (x - 3)**2, x0=0).x  # Find minimum of (x-3)^2
+
+# Interpolation
+x = np.array([1, 2, 3, 4])
+y = np.array([1, 4, 9, 16])
+f = interpolate.interp1d(x, y, kind='cubic')
+f(2.5)  # Interpolated value at x=2.5
+```
+
+#### **SymPy** (Symbolic Mathematics)
+```python
+from sympy import symbols, Eq, solve, diff, integrate, sin
+
+# Symbolic variables
+x, y = symbols('x y')
+expr = x**2 + 2*x + 1
+
+# Solving equations
+solve(Eq(expr, 0), x)  # [-1]
+
+# Differentiation
+diff(x**3 + 2*x**2 + x, x)  # 3*x**2 + 4*x + 1
+
+# Integration
+integrate(x**2, x)  # x**3/3
+
+# Symbolic limits and series
+from sympy import limit, series
+limit(sin(x)/x, x, 0)  # 1
+series(exp(x), x, 0, 5)  # 1 + x + x**2/2 + x**3/6 + x**4/24 + O(x**5)
+```
+
+---
+
+### 2. **Performance Optimization**
+For computationally intensive tasks, Python offers tools to optimize performance.
+
+#### **Numba** (Just-In-Time Compilation)
+```python
+from numba import njit
+
+@njit
+def fast_sum(arr):
+    total = 0
+    for num in arr:
+        total += num
+    return total
+
+arr = np.arange(1_000_000)
+fast_sum(arr)  # Much faster than pure Python
+```
+
+#### **Cython** (C Extensions for Python)
+Cython allows you to write C-like code for performance-critical sections.
+```python
+# Save as `example.pyx`
+def cython_sum(long[:] arr):
+    cdef long total = 0
+    cdef int i
+    for i in range(arr.shape[0]):
+        total += arr[i]
+    return total
+
+# Compile with Cython and use in Python
+```
+
+#### **Multiprocessing**
+For parallel processing:
+```python
+from multiprocessing import Pool
+
+def square(x):
+    return x**2
+
+with Pool(4) as p:
+    result = p.map(square, range(10))  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+```
+
+---
+
+### 3. **Advanced Number Theory**
+Python can handle advanced number theory concepts with ease.
+
+#### **Prime Factorization**
+```python
+def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n:
+        while n % i == 0:
+            factors.append(i)
+            n = n // i
+        i += 1
+    if n > 1:
+        factors.append(n)
+    return factors
+
+prime_factors(100)  # [2, 2, 5, 5]
+```
+
+#### **Greatest Common Divisor (GCD) and Least Common Multiple (LCM)**
+```python
+import math
+math.gcd(12, 18)  # 6
+math.lcm(12, 18)  # 36
+```
+
+#### **Modular Arithmetic**
+```python
+# Modular exponentiation
+pow(2, 10, mod=1000)  # 24 (2^10 % 1000)
+
+# Modular inverse
+def modinv(a, m):
+    return pow(a, -1, m)  # Python 3.8+
+
+modinv(3, 11)  # 4 (3 * 4 ≡ 1 mod 11)
+```
+
+#### **Chinese Remainder Theorem**
+```python
+from sympy.ntheory.modular import crt
+
+crt([3, 5, 7], [2, 3, 2])  # (23, 105) --> x ≡ 23 mod 105
+```
+
+---
+
+### 4. **Advanced Numerical Computations**
+#### **Arbitrary Precision Arithmetic**
+Python’s `decimal` and `mpmath` libraries allow for arbitrary precision.
+```python
+from decimal import Decimal, getcontext
+getcontext().prec = 100  # Set precision to 100 digits
+Decimal(1) / Decimal(7)  # 0.1428571428571428571428571428571428571428571428571428571428571428571428571428571428571428571428571429
+```
+
+#### **Complex Numbers**
+```python
+import cmath
+cmath.phase(1 + 1j)  # 0.7853981633974483 (phase in radians)
+cmath.polar(1 + 1j)  # (1.4142135623730951, 0.7853981633974483) (magnitude, phase)
+```
+
+#### **Special Functions**
+```python
+from scipy.special import gamma, erf, zeta
+
+gamma(5)  # 24.0 (Gamma function)
+erf(1)    # 0.8427007929497149 (Error function)
+zeta(2)   # 1.6449340668482264 (Riemann zeta function)
+```
+
+---
+
+### 5. **Cryptography and Hashing**
+Python’s `hashlib` and `cryptography` libraries are useful for cryptographic operations.
+```python
+import hashlib
+
+# Hashing
+hashlib.sha256(b"hello").hexdigest()  # '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824'
+
+# Random numbers for cryptography
+import secrets
+secrets.token_hex(16)  # 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+```
+
+---
+
+### 6. **Machine Learning and Data Science**
+#### **Pandas for Numerical Data**
+```python
+import pandas as pd
+
+df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+df['C'] = df['A'] + df['B']  # Add columns
+df.describe()  # Summary statistics
+```
+
+#### **TensorFlow/PyTorch for Deep Learning**
+```python
+import tensorflow as tf
+
+# Create a tensor
+tensor = tf.constant([[1, 2], [3, 4]])
+tf.reduce_sum(tensor)  # 10
+```
+
+---
 
 Strings
 ----
@@ -117,6 +533,248 @@ p = bool(word.find(word[::-1]) + 1)
 print(p) # True
 ```
 
+---
+
+### 1. **Advanced String Manipulation**
+#### **String Joining and Splitting**
+```python
+# Joining strings
+words = ['Hello', 'world', '!']
+sentence = ' '.join(words)  # 'Hello world !'
+
+# Splitting with multiple delimiters
+import re
+text = "Hello, world! How are you?"
+words = re.split(r'[ ,!?]', text)  # ['Hello', '', 'world', '', 'How', 'are', 'you', '']
+words = [word for word in words if word]  # Remove empty strings
+```
+
+#### **String Translation**
+```python
+# Translate characters using a mapping table
+translation_table = str.maketrans('aeiou', '12345')
+text = "This is a test."
+translated_text = text.translate(translation_table)  # 'Th3s 3s 1 t2st.'
+```
+
+#### **String Alignment**
+```python
+# Aligning strings
+text = "Hello"
+text.ljust(10)       # 'Hello     '
+text.rjust(10)       # '     Hello'
+text.center(10)      # '  Hello   '
+text.center(10, '-') # '--Hello---'
+```
+
+#### **String Partitioning**
+```python
+# Partitioning strings
+text = "Hello, world!"
+before, sep, after = text.partition(',')  # ('Hello', ',', ' world!')
+```
+
+---
+
+### 2. **Regular Expressions (Regex)**
+Python’s `re` module is powerful for pattern matching and text manipulation.
+
+#### **Basic Regex**
+```python
+import re
+
+# Search for a pattern
+match = re.search(r'\d+', 'The price is 123 dollars.')
+if match:
+    print(match.group())  # '123'
+
+# Find all matches
+matches = re.findall(r'\d+', 'The prices are 123 and 456 dollars.')  # ['123', '456']
+
+# Replace patterns
+new_text = re.sub(r'\d+', 'XXX', 'The price is 123 dollars.')  # 'The price is XXX dollars.'
+```
+
+#### **Advanced Regex**
+```python
+# Named groups
+match = re.search(r'(?P<name>\w+) is (?P<age>\d+) years old', 'John is 30 years old.')
+if match:
+    print(match.group('name'))  # 'John'
+    print(match.group('age'))   # '30'
+
+# Lookahead and lookbehind
+text = "Hello123World"
+result = re.findall(r'\d+(?=World)', text)  # ['123'] (lookahead)
+result = re.findall(r'(?<=Hello)\d+', text)  # ['123'] (lookbehind)
+```
+
+#### **Compiling Regex**
+For better performance with repeated use:
+```python
+pattern = re.compile(r'\d+')
+matches = pattern.findall('The prices are 123 and 456 dollars.')  # ['123', '456']
+```
+
+---
+
+### 3. **Unicode and Encoding**
+Python strings are Unicode by default, but handling encoding/decoding is crucial for working with external data.
+
+#### **Unicode Characters**
+```python
+# Unicode strings
+text = "你好，世界"  # Chinese for "Hello, world"
+print(len(text))  # 5 (characters, not bytes)
+
+# Unicode code points
+ord('A')  # 65
+chr(65)   # 'A'
+```
+
+#### **Encoding and Decoding**
+```python
+# Encoding to bytes
+text = "Hello, world!"
+encoded = text.encode('utf-8')  # b'Hello, world!'
+
+# Decoding from bytes
+decoded = encoded.decode('utf-8')  # 'Hello, world!'
+
+# Handling different encodings
+text = "Café"
+encoded = text.encode('latin-1')  # b'Caf\xe9'
+decoded = encoded.decode('latin-1')  # 'Café'
+```
+
+#### **Handling Encoding Errors**
+```python
+# Ignore errors
+text = "Café"
+encoded = text.encode('ascii', errors='ignore')  # b'Caf'
+
+# Replace errors
+encoded = text.encode('ascii', errors='replace')  # b'Caf?'
+```
+
+---
+
+### 4. **String Performance Optimization**
+Strings are immutable in Python, so operations like concatenation can be inefficient. Here’s how to optimize:
+
+#### **Using `join` for Concatenation**
+```python
+# Inefficient
+result = ''
+for word in ['Hello', 'world', '!']:
+    result += word  # Creates a new string each time
+
+# Efficient
+result = ''.join(['Hello', 'world', '!'])
+```
+
+#### **Using `io.StringIO` for Building Large Strings**
+```python
+from io import StringIO
+
+buffer = StringIO()
+buffer.write("Hello")
+buffer.write(" world!")
+result = buffer.getvalue()  # 'Hello world!'
+```
+
+#### **Using `f-strings` for Formatting**
+```python
+name = "Alice"
+age = 30
+text = f"{name} is {age} years old."  # Fast and readable
+```
+
+---
+
+### 5. **Advanced String Formatting**
+#### **Format Specifiers**
+```python
+# Floating point precision
+pi = 3.141592653589793
+print(f"{pi:.2f}")  # '3.14'
+
+# Padding and alignment
+text = "Hello"
+print(f"{text:>10}")  # '     Hello'
+print(f"{text:<10}")  # 'Hello     '
+print(f"{text:^10}")  # '  Hello   '
+
+# Formatting numbers
+number = 1234567890
+print(f"{number:,}")  # '1,234,567,890'
+```
+
+#### **Template Strings**
+```python
+from string import Template
+
+template = Template("Hello, $name!")
+text = template.substitute(name="Alice")  # 'Hello, Alice!'
+```
+
+---
+
+### 6. **String Interpolation and Templating**
+#### **Using `format_map`**
+```python
+data = {'name': 'Alice', 'age': 30}
+text = "Hello, {name}! You are {age} years old.".format_map(data)  # 'Hello, Alice! You are 30 years old.'
+```
+
+#### **Using `string.Template`**
+```python
+from string import Template
+
+template = Template("Hello, $name! You are $age years old.")
+text = template.substitute(name="Alice", age=30)  # 'Hello, Alice! You are 30 years old.'
+```
+
+---
+
+### 7. **String-Based Algorithms**
+#### **Palindrome Check (Advanced)**
+```python
+def is_palindrome(s):
+    s = ''.join(filter(str.isalnum, s)).lower()  # Remove non-alphanumeric characters
+    return s == s[::-1]
+
+print(is_palindrome("A man, a plan, a canal: Panama"))  # True
+```
+
+#### **Anagram Check**
+```python
+from collections import Counter
+
+def is_anagram(s1, s2):
+    return Counter(s1) == Counter(s2)
+
+print(is_anagram("listen", "silent"))  # True
+```
+
+#### **Longest Common Substring**
+```python
+def longest_common_substring(s1, s2):
+    table = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
+    longest = 0
+    for i in range(1, len(s1) + 1):
+        for j in range(1, len(s2) + 1):
+            if s1[i - 1] == s2[j - 1]:
+                table[i][j] = table[i - 1][j - 1] + 1
+                longest = max(longest, table[i][j])
+    return longest
+
+print(longest_common_substring("abcdef", "zbcdf"))  # 3 ('bcd')
+```
+
+---
+
+
 Boolean
 ----
 **True or False. Used in a lot of comparison and logical operations in Python**
@@ -138,6 +796,214 @@ print(bool(set()))
 
 # See Logical Operators and Comparison Operators section for more on booleans.
 ```
+
+### **1. Boolean Basics**
+- **Boolean Values**: `True` and `False`.
+- **Boolean Type**: `bool` (subclass of `int` where `True == 1` and `False == 0`).
+
+```python
+print(type(True))   # <class 'bool'>
+print(type(False))  # <class 'bool'>
+```
+
+---
+
+### **2. Truthy and Falsy Values**
+- **Falsy Values**: Values that evaluate to `False` in a Boolean context.
+- **Truthy Values**: Everything else evaluates to `True`.
+
+#### **Falsy Values**
+```python
+print(bool(None))       # False
+print(bool(False))      # False
+print(bool(0))          # False
+print(bool(0.0))        # False
+print(bool([]))         # False (empty list)
+print(bool({}))         # False (empty dictionary)
+print(bool(()))         # False (empty tuple)
+print(bool(''))         # False (empty string)
+print(bool(range(0)))   # False (empty range)
+print(bool(set()))      # False (empty set)
+```
+
+#### **Truthy Values**
+```python
+print(bool(1))          # True
+print(bool(-1))         # True
+print(bool(0.1))        # True
+print(bool([1, 2]))     # True (non-empty list)
+print(bool({'a': 1}))   # True (non-empty dictionary)
+print(bool((1, 2)))     # True (non-empty tuple)
+print(bool('a'))        # True (non-empty string)
+print(bool(range(1)))   # True (non-empty range)
+print(bool({1, 2}))     # True (non-empty set)
+```
+
+---
+
+### **3. Boolean Operations**
+Python provides three Boolean operators: `and`, `or`, and `not`.
+
+#### **`and` Operator**
+- Returns the first falsy value or the last truthy value.
+- Stops evaluating as soon as a falsy value is found.
+
+```python
+print(True and False)   # False
+print(False and True)   # False
+print(1 and 2)          # 2 (both are truthy, returns the last one)
+print(0 and 1)          # 0 (first falsy value)
+```
+
+#### **`or` Operator**
+- Returns the first truthy value or the last falsy value.
+- Stops evaluating as soon as a truthy value is found.
+
+```python
+print(True or False)    # True
+print(False or True)    # True
+print(1 or 2)           # 1 (first truthy value)
+print(0 or 1)           # 1 (first truthy value)
+print(0 or False)       # False (both are falsy, returns the last one)
+```
+
+#### **`not` Operator**
+- Returns the opposite Boolean value.
+
+```python
+print(not True)         # False
+print(not False)        # True
+print(not 0)            # True (0 is falsy)
+print(not 1)            # False (1 is truthy)
+```
+
+---
+
+### **4. Comparison Operators**
+Comparison operators return Boolean values (`True` or `False`).
+
+| Operator | Description                  | Example          | Result  |
+|----------|------------------------------|------------------|---------|
+| `==`     | Equal to                     | `5 == 5`         | `True`  |
+| `!=`     | Not equal to                 | `5 != 3`         | `True`  |
+| `>`      | Greater than                 | `5 > 3`          | `True`  |
+| `<`      | Less than                    | `5 < 3`          | `False` |
+| `>=`     | Greater than or equal to     | `5 >= 5`         | `True`  |
+| `<=`     | Less than or equal to        | `5 <= 3`         | `False` |
+
+#### **Examples**
+```python
+print(5 == 5)           # True
+print(5 != 3)           # True
+print(5 > 3)            # True
+print(5 < 3)            # False
+print(5 >= 5)           # True
+print(5 <= 3)           # False
+```
+
+---
+
+### **5. Chaining Comparisons**
+You can chain multiple comparisons for concise checks.
+
+```python
+x = 5
+print(1 < x < 10)       # True (equivalent to 1 < x and x < 10)
+print(5 == x == 5.0)    # True
+```
+
+---
+
+### **6. Membership Operators**
+Membership operators (`in` and `not in`) return Boolean values.
+
+| Operator | Description                  | Example          | Result  |
+|----------|------------------------------|------------------|---------|
+| `in`     | True if value is in sequence | `'a' in 'abc'`   | `True`  |
+| `not in` | True if value is not in sequence | `'d' not in 'abc'` | `True`  |
+
+#### **Examples**
+```python
+print('a' in 'abc')     # True
+print('d' not in 'abc') # True
+print(1 in [1, 2, 3])   # True
+print(4 not in {1, 2, 3}) # True
+```
+
+---
+
+### **7. Identity Operators**
+Identity operators (`is` and `is not`) check if two objects are the same (same memory location).
+
+| Operator | Description                  | Example          | Result  |
+|----------|------------------------------|------------------|---------|
+| `is`     | True if both objects are the same | `x is y`       | Depends |
+| `is not` | True if both objects are not the same | `x is not y` | Depends |
+
+#### **Examples**
+```python
+x = [1, 2, 3]
+y = [1, 2, 3]
+z = x
+
+print(x is y)           # False (different objects)
+print(x is z)           # True (same object)
+print(x is not y)       # True
+```
+
+---
+
+### **8. Short-Circuit Evaluation**
+- **`and`**: Stops evaluating as soon as a falsy value is found.
+- **`or`**: Stops evaluating as soon as a truthy value is found.
+
+```python
+def expensive_operation():
+    print("Expensive operation executed!")
+    return True
+
+# Short-circuit with `and`
+print(False and expensive_operation())  # False (expensive_operation not called)
+
+# Short-circuit with `or`
+print(True or expensive_operation())    # True (expensive_operation not called)
+```
+
+---
+
+### **9. Boolean Conversion**
+Use `bool()` to explicitly convert values to Boolean.
+
+```python
+print(bool(10))         # True
+print(bool(0))          # False
+print(bool('Hello'))    # True
+print(bool(''))         # False
+```
+
+---
+
+### **10. Practical Use Cases**
+- **Conditional Statements**:
+  ```python
+  if x > 0:
+      print("Positive")
+  else:
+      print("Non-positive")
+  ```
+
+- **Filtering**:
+  ```python
+  numbers = [1, 0, 5, 0, 10]
+  filtered = list(filter(bool, numbers))  # [1, 5, 10]
+  ```
+
+- **Logical Checks**:
+  ```python
+  is_valid = True if x > 0 else False
+  ```
+
+---
 
 Lists
 ----
