@@ -9365,6 +9365,292 @@ class Employee(Person):
         self.staff_num = staff_num
 ```
 
+
+### **Inheritance in Python**
+
+Inheritance is a key feature of Object-Oriented Programming (OOP) in Python. It allows a class (child class) to inherit the attributes and methods from another class (parent class), enabling reusability and reducing redundancy.
+
+#### **Basic Syntax for Inheritance**
+
+```python
+class ParentClass:
+    # Attributes and Methods of Parent class
+    pass
+
+class ChildClass(ParentClass):
+    # Attributes and Methods of Child class
+    pass
+```
+
+### **Key Concepts in Inheritance**
+
+1. **Parent (Base) Class**: The class whose attributes and methods are inherited by another class.
+2. **Child (Derived) Class**: The class that inherits the attributes and methods from the parent class.
+3. **`super()` Function**: A built-in function that allows you to call methods from the parent class, especially in the constructor (`__init__`) method.
+
+---
+
+### **Types of Inheritance**
+
+1. **Single Inheritance**:
+   - A child class inherits from a single parent class.
+   
+   ```python
+   class Person:
+       def __init__(self, name, age):
+           self.name = name
+           self.age = age
+
+   class Employee(Person):  # Inheriting from Person
+       def __init__(self, name, age, staff_num):
+           super().__init__(name, age)  # Calling parent constructor
+           self.staff_num = staff_num
+
+   emp = Employee("John", 30, 1234)
+   print(emp.name)  # Output: John (inherited from Person)
+   ```
+
+2. **Multiple Inheritance**:
+   - A child class can inherit from more than one class.
+   
+   ```python
+   class Animal:
+       def speak(self):
+           print("Animal speaks")
+
+   class Bird:
+       def fly(self):
+           print("Bird flies")
+
+   class Sparrow(Animal, Bird):  # Inheriting from both Animal and Bird
+       pass
+
+   sparrow = Sparrow()
+   sparrow.speak()  # Output: Animal speaks
+   sparrow.fly()    # Output: Bird flies
+   ```
+
+3. **Multilevel Inheritance**:
+   - A class inherits from a derived class, forming a chain of inheritance.
+   
+   ```python
+   class Person:
+       def __init__(self, name):
+           self.name = name
+
+   class Employee(Person):
+       def __init__(self, name, staff_num):
+           super().__init__(name)
+           self.staff_num = staff_num
+
+   class Manager(Employee):
+       def __init__(self, name, staff_num, department):
+           super().__init__(name, staff_num)
+           self.department = department
+
+   mgr = Manager("Alice", 1001, "Sales")
+   print(mgr.name)        # Output: Alice
+   print(mgr.staff_num)   # Output: 1001
+   print(mgr.department)  # Output: Sales
+   ```
+
+4. **Hierarchical Inheritance**:
+   - Multiple classes inherit from a single parent class.
+   
+   ```python
+   class Person:
+       def __init__(self, name, age):
+           self.name = name
+           self.age = age
+
+   class Employee(Person):  # Inheriting from Person
+       def __init__(self, name, age, staff_num):
+           super().__init__(name, age)
+           self.staff_num = staff_num
+
+   class Customer(Person):  # Inheriting from Person
+       def __init__(self, name, age, customer_id):
+           super().__init__(name, age)
+           self.customer_id = customer_id
+
+   emp = Employee("John", 30, 1234)
+   customer = Customer("Jane", 28, 5678)
+
+   print(emp.name)  # Output: John
+   print(customer.name)  # Output: Jane
+   ```
+
+5. **Hybrid Inheritance**:
+   - A combination of two or more types of inheritance, such as multiple inheritance and multilevel inheritance together.
+   
+   ```python
+   class A:
+       def speak(self):
+           print("Class A speaks")
+
+   class B:
+       def greet(self):
+           print("Class B greets")
+
+   class C(A, B):  # Multiple inheritance
+       def hello(self):
+           print("Class C says hello")
+
+   class D(C):  # Multilevel inheritance
+       pass
+
+   obj = D()
+   obj.speak()  # Output: Class A speaks
+   obj.greet()  # Output: Class B greets
+   obj.hello()  # Output: Class C says hello
+   ```
+
+---
+
+### **Using `super()` Function**
+
+- The `super()` function is used to call methods from the parent class.
+- It’s especially useful in the `__init__()` method to initialize attributes of the parent class.
+  
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+class Employee(Person):
+    def __init__(self, name, age, staff_num):
+        super().__init__(name, age)  # Calls Person's __init__
+        self.staff_num = staff_num
+
+emp = Employee("John", 30, 1234)
+print(emp.name)  # Output: John
+```
+
+---
+
+### **Overriding Methods**
+
+- A child class can override methods from the parent class to change or extend the functionality.
+
+```python
+class Person:
+    def speak(self):
+        print("I am a person")
+
+class Employee(Person):
+    def speak(self):  # Overriding the speak method
+        print("I am an employee")
+
+emp = Employee()
+emp.speak()  # Output: I am an employee (overridden)
+```
+
+---
+
+### **Inheritance and Method Resolution Order (MRO)**
+
+- In Python, when a method is called, the MRO determines the order in which methods are looked up. 
+- You can check the MRO using the `mro()` method.
+
+```python
+class A:
+    def method(self):
+        print("A method")
+
+class B(A):
+    def method(self):
+        print("B method")
+
+class C(B):
+    pass
+
+obj = C()
+obj.method()  # Output: B method
+
+# Check MRO order
+print(C.mro())  # Output: [<class '__main__.C'>, <class '__main__.B'>, <class '__main__.A'>, <class 'object'>]
+```
+
+---
+
+### **Accessing Parent Class Methods**
+
+- **Using `super()` to call the parent class method** in the child class:
+  
+```python
+class Animal:
+    def sound(self):
+        print("Animal sound")
+
+class Dog(Animal):
+    def sound(self):
+        super().sound()  # Call the parent class method
+        print("Woof!")
+
+dog = Dog()
+dog.sound()
+# Output:
+# Animal sound
+# Woof!
+```
+
+---
+
+### **Abstract Base Class (ABC)**
+
+- You can use an abstract base class (ABC) to define methods that must be implemented in any derived class.
+- You can define abstract methods using the `@abstractmethod` decorator.
+
+```python
+from abc import ABC, abstractmethod
+
+class Person(ABC):
+    @abstractmethod
+    def speak(self):
+        pass
+
+class Employee(Person):
+    def speak(self):
+        print("I am an employee")
+
+# emp = Person()  # This will raise an error: TypeError: Can't instantiate abstract class Person with abstract method speak
+emp = Employee()
+emp.speak()  # Output: I am an employee
+```
+
+---
+
+### **Super Important Inheritance Points**
+
+1. **`super()` is used to call parent class methods**, and it's commonly used in the `__init__()` method to initialize the parent class.
+2. **Method Overriding** allows a child class to change the behavior of a method inherited from the parent class.
+3. **Method Resolution Order (MRO)** determines the order in which the methods are inherited, especially when using multiple inheritance.
+4. **Abstract Classes and Methods** allow you to define methods that must be implemented in a child class, ensuring that all subclasses implement certain behaviors.
+
+---
+
+### **Key Inheritance Methods**
+
+- **`issubclass(subclass, parent_class)`**: Checks if a class is a subclass of another.
+  
+  ```python
+  print(issubclass(Employee, Person))  # Output: True
+  ```
+
+- **`isinstance(object, class)`**: Checks if an object is an instance of a class.
+  
+  ```python
+  emp = Employee("John", 30, 1234)
+  print(isinstance(emp, Person))  # Output: True
+  ```
+
+---
+
+### **Final Thoughts**
+
+Inheritance allows for code reusability, and understanding its core concepts like overriding, super, multiple inheritance, and the method resolution order (MRO) is crucial to mastering Python's OOP capabilities. By leveraging inheritance, you can build more efficient and maintainable Python programs.
+
 ### Multiple Inheritance
 ```python
 class A: pass
